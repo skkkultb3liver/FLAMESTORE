@@ -1,0 +1,145 @@
+.modal-login {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  z-index: 7;
+}
+.modal-login__dialog {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow: hidden;
+  max-height: 85vh;
+  background-color: rgb(20, 20, 20);
+  border-radius: 10px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  -webkit-transform: translateY(-50px);
+          transform: translateY(-50px);
+  width: 500px;
+}
+.modal-login__dialog-header, .modal-login__dialog-body, .modal-login__dialog-footer {
+  padding: 20px 40px;
+}
+.modal-login__dialog-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-top: 30px;
+}
+.modal-login__dialog-header .modal-title {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  display: inline-block;
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-size: 22px;
+  color: rgb(238, 231, 231);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.modal-login__dialog-header .modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: inline-block;
+
+  font-size: 20px;
+  color: rgb(212, 206, 206);
+}
+.modal-login__dialog-header .fa-xmark {
+
+}
+.modal-login__dialog-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  overflow: auto;
+}
+.modal-login__dialog-body-content__form .login-form-input .form-label {
+  color: #afaeae;
+}
+.modal-login__dialog-body-content__form .login-form-input input {
+  padding: 0.125rem 0.25rem;
+  background-color: transparent;
+  border: 1px solid rgba(223, 223, 223, 0.6);
+  border-radius: 5px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+.modal-login__dialog-body-content__form .login-form-input input:focus {
+  border-color: rgba(212, 72, 72, 0.759);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(230, 80, 80, 0.307);
+          box-shadow: 0 0 0 0.2rem rgba(230, 80, 80, 0.307);
+  color: #afaeae;
+}
+.modal-login__dialog-body-content .login-form__description {
+  color: #E94E4E;
+  opacity: 0.7;
+  text-decoration: none;
+}
+.modal-login__dialog-body-content .login-form__description:hover {
+  opacity: 1;
+}
+.modal-login__dialog-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+.modal-login__dialog-footer .login-button {
+  color: rgb(201, 192, 192);
+  border-color: #E94E4E;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.modal-login__dialog-footer .login-button:hover {
+  background-color: #E94E4E;
+  color: rgb(236, 230, 230);
+  font-weight: 600;
+}
+.modal-login--screen-geight .modal-login__diagol {
+  height: 85vh;
+}
+.modal-login--active {
+  visibility: visible;
+  opacity: 1;
+}
+.modal-login--active .modal-login__dialog {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}

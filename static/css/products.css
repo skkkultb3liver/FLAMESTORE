@@ -1,0 +1,531 @@
+body{
+    font-family: 'Lato';
+    font-weight: normal;
+    background-image: url('/static/vendor/img/background/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    padding-top: 170px;
+}
+
+.container {
+    max-width: 1600px;
+}
+
+.main-nav{
+    background-color: rgba(20, 20, 20, 1) !important;
+    z-index: 3;
+}
+
+.row, .col {
+    padding: 0;
+    margin: 0;
+}
+
+.menu-row{
+    width: 100%;
+}
+
+.menu-item{
+    display: flex;
+    align-items: center;
+}
+.menu-item:nth-child(2){
+    justify-content: center;
+}
+.menu-item:nth-child(3){
+    justify-content: flex-end;
+}
+
+.nav-item>span {
+    display: inline-block;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+
+    text-decoration: none;
+
+    color: #FFFFFF;
+}
+
+.nav-item>i{
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 14px;
+
+    margin-left: 20px;
+    margin-bottom: 8px;
+}
+
+.navbar-brand>span{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 92px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+.navbar-brand>span>b {
+    color: rgba(233, 78, 78, 1);
+}
+.navbar-brand:hover{
+    text-decoration: none;
+    color: #FFF;
+}
+
+.user-block{
+    position: relative;
+}
+
+
+
+.user-name span{
+    background-image: url('/static/vendor/img/products/vph/browse-list-triangle.svg');
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+
+
+    padding-left: 20px;
+}
+
+.fa-cart-shopping {
+    color: #fff;
+    margin-left: 10px;
+}
+
+
+
+/* main-section */
+.products-container{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+.main-section{
+    display: flex;
+    flex-direction: row;
+    justify-items: space-between;
+    flex-flow: row wrap;
+}
+
+.filter-section{
+    background-color: rgba(20, 20, 20, 1);
+    width: 300px;
+    padding-right: 0;
+    max-height: auto;
+    border-radius: 10px;
+    margin-right: 70px;
+}
+
+.filter-section__header{
+    width: 245px;
+    display: inline-block;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 28px;
+
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+
+    padding-top: 20px;
+    margin-left: 25px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #4B4848;
+}
+
+.filter-section__list-gender{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 245px;
+    padding-top: 25px;
+    margin-left: 25px;
+}
+.filter-section__list-gender li{
+    margin-bottom: 20px;
+}
+.list-gender__item-text {
+    display: inline-block;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+    text-decoration: none;
+
+    color: #FFF;
+}
+.list-gender__item:hover{
+    color: #E94E4E;
+}
+
+
+.form-check-input {
+    background-color: transparent;
+    border: 1px solid rgba(177, 175, 175, 0.25);
+    margin-right: 7px;
+}
+
+.form-check-input[type=checkbox]{
+    border-radius: 0.15em;
+}
+.form-check-input:checked {
+    background-color: rgba(233, 78, 78, 1);
+    border: 1px solid rgba(177, 175, 175, 0.25);
+    box-shadow: none;
+}
+.form-check-input:focus {
+    border: 1px solid rgba(177, 175, 175, 0.25);
+    box-shadow: none;
+}
+.filter-section__list-gender>li:nth-child(2){
+    margin-bottom: 0;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #4B4848;
+}
+
+.filter-section__list-clothes{
+    list-style: none;
+    padding: 0;
+    margin-left: 25px;
+    padding-top: 25px;
+    width: 245px;
+    margin-bottom: 0;
+}
+
+#clothingMenuCheckDefault,
+#jeansMenuCheckDefault,
+#shoesMenuCheckDefault,
+#accesMenuCheckDefault {
+    display: none;
+}
+#clothingMenuCheckDefault:checked ~ .filter-section__sub-list-clothes,
+#jeansMenuCheckDefault:checked ~ .filter-section__sub-list-jeans,
+#shoesMenuCheckDefault:checked ~ .filter-section__sub-list-shoes,
+#accesMenuCheckDefault:checked ~ .filter-section__sub-list-acces{
+    display: block;
+}
+
+.list-item{
+    text-decoration: none;
+}
+.list-item:hover span{
+    color: #E94E4E;
+    transition: all 0.2s;
+}
+
+.list-clothes__item-text{
+    width: 200px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-transform: uppercase;
+
+    background-image: url('/static/vendor/img/products/vph/browse-list-triangle.svg');
+    background-repeat: no-repeat;
+    background-position: right center;
+
+    text-decoration: none;
+
+    color: #FFFFFF;
+
+    padding-right: 20px;
+}
+.list-clothes__item-text:hover{
+    cursor: pointer;
+}
+.filter-section__list-clothes>li{
+    position: relative;
+    margin-bottom: 25px;
+}
+.filter-section__sub-list-clothes,
+.filter-section__sub-list-shoes,
+.filter-section__sub-list-acces{
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 15px;
+    margin-left: 20px;
+}
+.filter-section__sub-list-jeans{
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 15px;
+    margin-left: 20px;
+}
+.list-clothes__sub-item-text {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    color: #FFF;
+}
+.list-clothes__sub-item-text:hover{
+    cursor: pointer;
+}
+.filter-section__sub-list-clothes>li{
+    padding-bottom: 15px;
+}
+.filter-section__sub-list-jeans>li{
+    padding-bottom: 15px;
+}
+.filter-section__sub-list-shoes>li{
+    padding-bottom: 15px;
+}
+.filter-section__sub-list-acces>li{
+    padding-bottom: 15px;
+}
+.filter-section__sub-list-clothes>li:nth-last-child(1){
+    padding-bottom: 10px;
+}
+.filter-section__sub-list-jeans>li:nth-last-child(1){
+    padding-bottom: 10px;
+}
+.filter-section__sub-list-shoes>li:nth-last-child(1){
+    padding-bottom: 10px;
+}
+.filter-section__sub-list-acces>li:nth-last-child(1){
+    padding-bottom: 10px;
+}
+
+.find-button{
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid rgba(233, 89, 89, 0.9);
+
+    margin-left: 82px;
+    margin-top: 15px;
+
+    margin-bottom: 15px;
+
+    transition: all 0.1s;
+}
+
+.find-button>span{
+    display: inline-block;
+    padding: 8px 25px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: rgba(233, 89, 89, 0.9);
+    text-transform: uppercase;
+
+}
+
+.find-button:hover{
+    background-color: rgba(233, 89, 89, 0.9);
+}
+.find-button:hover>span{
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 20px;
+    line-height: 24px;
+}
+
+
+/*===================== product section ====================== */
+.products-section{
+    display: grid;
+    grid-template-columns: 280px 280px 280px;
+    column-gap: 90px;
+    row-gap: 35px;
+}
+
+.card-item {
+    position: relative;
+    width: 280px;
+    height: 480px;
+    
+    background-color: rgba(20, 20, 20, 1);
+    border-radius: 10px;
+}
+.card-title{
+    display: inline-block;
+
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 20px;
+    color: #FFFFFF;
+
+    letter-spacing: 0.02em;
+
+    padding-left: 17px;
+    padding-top: 15px;
+
+    transition: all .1s;
+}
+.card-title:hover{
+    color: rgba(233, 89, 89, 0.9);
+}
+
+.card-price{
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    display: inline-block;
+
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.15em;
+
+    padding-left: 17px;
+    padding-top: 15px;
+
+    color: #A69E9E;
+
+    text-transform: uppercase;
+}
+.card-cart {
+    display: none;
+    position: absolute;
+    right: 15px;
+    bottom: 16px;
+}
+.fa-cart-plus{
+    font-size: 17px;
+    color: #afafaf;
+}
+.card-item:hover .card-cart{
+    display: block;
+}
+
+/* ========================PAGINATION========================= */
+
+.products-navigation{
+    margin-left: 725px;
+    margin-top: 115px;
+}
+
+.page-link{
+    font-weight: 600;
+    background-color: rgba(20, 20, 20, 1);
+    border: none;
+
+    font-size: 20px;
+
+    color: rgb(189, 184, 184);
+    text-transform: uppercase;
+
+    padding: 15px 20px;
+}
+
+.page-link:hover{
+    background-color: rgba(20, 20, 20, 1);
+    color: #E94E4E;
+}
+.page-link:focus{
+    background-color: #E94E4E;
+    color: rgba(20, 20, 20, 1);
+    border: none;
+    box-shadow: none;
+}
+
+/* ==================================================FOOTER================================================= */
+
+footer{
+    background-color: rgba(20, 20, 20, 1);
+    margin-top: 75px;
+    width: 100%;
+}
+footer .col{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.footer-title{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 49px;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+.footer-description{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.footer-socials{
+    display: flex;
+    flex-direction: row;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    margin-left: 280px;
+    padding-top: 20px;
+}
+.footer-social{
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+}
+.footer-social-img{
+    color: #E94E4E;
+    font-size: 35px;
+}
+.footer-socials li{
+    margin-left: 45px;
+}
+
+.footer-help{
+    margin-left: 200px;
+}
+.footer-link{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 37px;
+    text-transform: uppercase;
+
+    color: #d4cfcf;
+
+    text-decoration: none;
+
+    padding-top: 10px;
+}
+.footer-link:hover{
+    color: #E94E4E;
+}
+
+/* ==================================FILTER================================ */
+
+.hide {
+    display: none;
+}

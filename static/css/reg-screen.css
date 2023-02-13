@@ -1,0 +1,152 @@
+.reg-screen-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.reg-screen {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 50%;
+  background-color: rgb(20, 20, 20);
+  border-radius: 10px;
+}
+.reg-screen__header {
+  display: inline-block;
+  font-family: "Montserrat";
+  font-size: 25px;
+  color: rgb(211, 209, 209);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-top: 30px;
+  padding-bottom: 45px;
+}
+.reg-screen__body {
+  padding-left: 150px;
+  padding-right: 150px;
+  padding-bottom: 0;
+}
+.reg-screen__body .passHelper {
+  display: inline-block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.349);
+  margin-bottom: 30px;
+}
+.reg-screen__body .password-form {
+  margin-bottom: 10px;
+}
+.reg-screen__body .password-confirm-form {
+  margin-bottom: 25px;
+}
+.reg-screen__body-alert {
+  display: none;
+  opacity: 0;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.reg-screen__body-alert .pass-warn {
+  display: inline-block;
+  color: rgba(241, 32, 32, 0.774);
+  margin-bottom: 40px;
+}
+.reg-screen__body .active {
+  height: 25px;
+  display: block;
+  opacity: 1;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.reg-screen__body-form {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 50px;
+}
+.reg-screen__body-form:nth-last-child(1) {
+  margin-bottom: 15px;
+}
+.reg-screen__body-form input {
+  border: none;
+  width: 100%;
+  color: rgba(240, 248, 255, 0.815);
+  background-color: transparent;
+}
+.reg-screen__body-form input:focus-visible, .reg-screen__body-form input:valid {
+  border: none;
+  outline: none;
+}
+.reg-screen__body-form .form-label {
+  position: absolute;
+  width: 100%;
+  border-bottom: 1px solid rgb(226, 222, 222);
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  margin: 0;
+}
+.reg-screen__body-form .form-label span {
+  position: absolute;
+  bottom: 2px;
+  left: 1px;
+  color: rgba(227, 228, 230, 0.747);
+}
+.reg-screen__body-form .form-label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 100%;
+  border-bottom: 2px solid rgba(233, 78, 78, 0.8784313725);
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.reg-screen-button {
+  opacity: 0.9;
+  background-color: transparent;
+  border: 1px solid rgba(233, 78, 78, 0.8784313725);
+  border-radius: 5px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+.reg-screen-button:hover {
+  opacity: 1;
+}
+.reg-screen-button:active {
+  opacity: 1;
+  background-color: rgba(233, 78, 78, 0.8784313725);
+}
+.reg-screen-button:active__text {
+  font-weight: 600;
+  color: aliceblue;
+}
+.reg-screen-button__text {
+  display: inline-block;
+  padding: 8px 12px;
+  color: rgba(240, 248, 255, 0.801);
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: "Montserrat";
+}
+
+.reg-screen__body-form input:focus + .form-label span, .reg-screen__body-form input:valid + .form-label span {
+  display: none;
+}
+
+.reg-screen__body-form input:focus + .form-label::after, .reg-screen__body-form input:valid + .form-label::after {
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
+}
