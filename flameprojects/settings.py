@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
 
     'products',
+    'accounts',
 
 ]
 
@@ -73,6 +74,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'flameprojects.wsgi.application'
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 
 # Database

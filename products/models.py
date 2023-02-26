@@ -1,9 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
-
 
 # Create your models here.
 
@@ -42,9 +38,12 @@ class Product(models.Model):
     size = models.CharField(max_length=36, blank=True)
     sizing = models.TextField(max_length=568, blank=True)
     fabric = models.TextField(max_length=568, blank=True)
-    price = models.CharField(max_length=32)
+    price = models.IntegerField()
     category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True)
     add_category = models.ForeignKey(AdditionalProductCategory, on_delete=models.SET_NULL, null=True)
+    stock = models.IntegerField(default=1)
+    upload_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
         return reverse("product", kwargs={"slug": self.url})
