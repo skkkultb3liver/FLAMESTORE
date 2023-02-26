@@ -75,9 +75,10 @@ class RatingStar(models.Model):
     class Meta:
         verbose_name = 'Rating star'
         verbose_name_plural = 'Rating stars'
+        ordering = ["-value"]
 
     def __str__(self):
-        return self.value
+        return f'{self.value}'
 
 
 class Rating(models.Model):

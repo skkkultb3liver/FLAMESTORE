@@ -87,19 +87,41 @@
                     </button>
                 </div>
             </div>
-{#            <div class="review-send-block">#}
-{#                <form action="{% url 'add_review' product.id %}" method="post" class="mt-2">#}
-{#                    {% csrf_token %}#}
-{#                    <div class="input-group main-comment-form">#}
-{#                        <span class="input-group-text" id="basic-addon1">*</span>#}
-{#                        <input type="text" class="form-control form-control-lg" placeholder="YOUR COMMENT" aria-label="" aria-describedby="basic-addon1" name="text">#}
-{#                        <!-- <span class="input-group-text" id="basic-addon1">@</span>#}
-{#                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"> -->#}
-{#                    </div>#}
+            <div class="review-send-block row g-3 align-items-center">
+                <form action="{% url 'add_review' product.id %}" method="post" class="col-10">
+                    {% csrf_token %}
+                    <div class="input-group main-comment-form">
+                        <span class="input-group-text" id="basic-addon1">*</span>
+                        <input type="text" class="form-control form-control-lg" placeholder="YOUR COMMENT" aria-label="" aria-describedby="basic-addon1" name="text">
+                        <button type="submit" class="btn btn-danger">send</button>
+                    </div>
+                </form>
+
+
+{#                <form method="post" action="{% url 'add_rating' %}" class="col-5" name="rating">#}
+{#                    <div class="rating-send-block">#}
+{#                        {% csrf_token %}#}
+{#                        <input type="hidden" value="{{ product.id }}" name="product">#}
+{#                        <div class="rating-items">#}
+{#                            {% for k, v in star_form.fields.star.choices %}#}
+{#                                <input id="rating{{ v }}" type="radio" value="{{ k }}" name="star">#}
+{#                                <label for="rating{{ v }}">☆</label>#}
+{#                            {% endfor %}#}
 {##}
-{#                    <button type="submit" class="btn btn-danger">send</button>#}
+{##}
+{#                            <input id="id2" type="radio" value="" name="rating_star">#}
+{#                            <label for="id2">☆</label>#}
+{#                            <input id="id3" type="radio" value="" name="rating_star">#}
+{#                            <label for="id3">☆</label>#}
+{#                            <input id="id4" type="radio" value="" name="rating_star">#}
+{#                            <label for="id4">☆</label>#}
+{#                            <input id="id5" type="radio" value="" name="rating_star">#}
+{#                            <label for="id5">☆</label>#}
+{#                        </div>#}
+{#                    </div>#}
 {#                </form>#}
-{#            </div>#}
+
+            </div>
             <div class="reviews-section">
                 <div class="reviews-title">
                     <span class="">reviews ( {{ product.reviews_set.count }} )</span>
@@ -123,7 +145,7 @@
                                     <p>{{ review.text }}</p>
                                 </div>
                                 <div class="rating-field">
-
+                                    {{ product.rating_set.filter }}
                                 </div>
                             </div>
                         </div>
@@ -140,5 +162,6 @@
 {% block js %}
     <script src="{% static 'js/slick.min.js' %}"></script>
     <script src="{% static 'js/slider-script.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
 

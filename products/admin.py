@@ -14,6 +14,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(AdditionalProductCategory)
 class AdditionalCategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"url": ("name",)}
     list_display = ("id", "name", "dress", "url")
     list_display_links = ("name",)
 

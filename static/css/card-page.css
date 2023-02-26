@@ -187,12 +187,12 @@
 }
 
 .review-send-block{
-  margin-top: 75px;
+  margin-top: 150px;
+
+  margin-left: 106px;
 }
 
 .main-comment-form {
-  width: 1350px;
-  margin-left: 114px;
 }
 
 
@@ -338,7 +338,61 @@
 
 }
 
-
 .rating-field{
   grid-area: rating;
 }
+
+/*=================== RATING ===================================*/
+
+.rating-send-block {
+  position: relative;
+  font-size: 55px;
+  display: inline-block;
+
+  margin-left: 75px;
+}
+
+
+.rating-items {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-left: 10px;
+}
+
+.rating-items input {
+  display: none;
+}
+
+.rating-items label {
+  position: relative;
+  color: rgba(219, 208, 208, 0.3);
+
+  cursor: pointer;
+
+  transition: color 0.2s;
+
+  margin-right: 10px;
+}
+
+.rating-items label::before {
+  content: "★";
+  position: absolute;
+  color: rgba(219, 208, 208, 0.3);
+
+  opacity: 0;
+
+  transition: color 0.2s
+}
+
+.rating-items label:hover ~ label:before {
+  color: rgb(235, 112, 112);
+  opacity: 1;
+}
+
+.rating-items label:hover::before {
+  opacity: 1;
+
+  color: rgba(234, 81, 81);
+}
+
+
