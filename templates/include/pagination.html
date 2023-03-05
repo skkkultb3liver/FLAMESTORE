@@ -56,8 +56,8 @@
             {% endif %}
             {% if page_obj.number|add:'-3' >= 3 %}
                 <li class="page-item">
-                    <a class="page-link" href="?{{ genre }}{{ dress }}page={{ page_obj.previous_page_number|add:'-3' }}">
-                        <span class="page-link">• • •</span>
+                    <a class="page-link p-dots" href="?{{ genre }}{{ dress }}page={{ page_obj.previous_page_number|add:'-3' }}">
+                        . . .
                     </a>
                 </li>
             {% endif %}
@@ -78,8 +78,8 @@
         {% if page_obj.has_next %}
             {% if page_obj.number|add:'4' < page_obj.paginator.num_pages %}
                 <li class="page-item">
-                    <a class="page-link" href="?{{ genre }}{{ dress }}page={{ page_obj.next_page_number|add:'3' }}">
-                        <span class="page-link">• • •</span>
+                    <a class="page-link p-dots" href="?{{ genre }}{{ dress }}page={{ page_obj.next_page_number|add:'3' }}">
+                        . . .
                     </a>
                 </li>
             {% endif %}

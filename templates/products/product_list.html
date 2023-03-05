@@ -5,127 +5,40 @@
     <main>
         <div class="products-container">
             <div class="main-section">
-                <div class="pre-filter-section">
-                    <div class="filter-section">
-                        <span class="filter-section__header">filter by:</span>
-                        <form action="{% url 'filter' %}" method="get">
-                            <ul class="filter-section__list-gender">
-                                {% for genre in view.get_genres %}
-                                    <li class="">
-                                        <input class="form-check-input" type="checkbox" id="{{ genre.name }}CheckDefault" name="category" value="{{ genre.id }}">
-                                        <label class="form-check-label" for="{{ genre.name }}CheckDefault">
-                                            <span class="list-gender__item-text">for {{ genre.name }}</span>
-                                        </label>
-                                    </li>
-                                {% endfor %}
-                            </ul>
 
-                            <ul class="filter-section__list-clothes">
-                                <li class="clothing-menu">
-                                    <input type="checkbox" id="clothingMenuCheckDefault">
-                                    <label class="form-check-label" for="clothingMenuCheckDefault">
-                                        <span class="list-clothes__item-text">clothing</span>
-                                    </label>
-                                    <ul class="filter-section__sub-list-clothes">
-                                        {% for cloth in view.get_clothing %}
-                                            {% if cloth.dress == "clothing" %}
-                                                <li>
-    {#                                                <a href="#" class="list-item">#}
-    {#                                                    <span class="list-clothes__sub-item-text">#}
-    {#                                                        {{ a_category.name }}#}
-    {#                                                    </span>#}
-    {#                                                </a>#}
-                                                     <input class="form-check-input" type="checkbox" value="{{ cloth.id }}" name="add_category" id="sub-{{ cloth.name }}CheckDefault">
-                                                     <label class="form-check-label" for="sub-{{ cloth.name }}CheckDefault">
-                                                            <span class="list-clothes__sub-item-text">{{ cloth.name }}</span>
-                                                     </label>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                                <li>
-                                    <input type="checkbox" id="jeansMenuCheckDefault">
-                                    <label class="form-check-label" for="jeansMenuCheckDefault">
-                                        <span class="list-clothes__item-text">jeans</span>
-                                    </label>
-                                    <ul class="filter-section__sub-list-jeans">
-                                        {% for cloth in view.get_clothing %}
-                                            {% if cloth.dress == "jeans" %}
-                                                <li>
-    {#                                                <a href="#" class="list-item">#}
-    {#                                                    <span class="list-clothes__sub-item-text">#}
-    {#                                                        {{ a_category.name }}#}
-    {#                                                    </span>#}
-    {#                                                </a>#}
-                                                     <input class="form-check-input" type="checkbox" value="{{ cloth.id }}" name="add_category" id="sub-{{ cloth.name }}CheckDefault">
-                                                     <label class="form-check-label" for="sub-{{ cloth.name }}CheckDefault">
-                                                            <span class="list-clothes__sub-item-text">{{ cloth.name }}</span>
-                                                     </label>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                                <li>
-                                    <input class="form-check-input" type="checkbox" value="" id="accesMenuCheckDefault">
-                                    <label class="form-check-label" for="accesMenuCheckDefault">
-                                        <span class="list-clothes__item-text">accesories</span>
-                                    </label>
-                                    <ul class="filter-section__sub-list-acces">
-                                        {% for cloth in view.get_clothing %}
-                                            {% if cloth.dress == "accessories" %}
-                                                <li>
-    {#                                                <a href="#" class="list-item">#}
-    {#                                                    <span class="list-clothes__sub-item-text">#}
-    {#                                                        {{ a_category.name }}#}
-    {#                                                    </span>#}
-    {#                                                </a>#}
-                                                     <input class="form-check-input" type="checkbox" value="{{ cloth.id }}" name="add_category" id="sub-{{ cloth.name }}CheckDefault">
-                                                     <label class="form-check-label" for="sub-{{ cloth.name }}CheckDefault">
-                                                            <span class="list-clothes__sub-item-text">{{ cloth.name }}</span>
-                                                     </label>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            </ul>
-                            <div class="filter-section__footer">
-                                <button class="find-button" type="submit">
-                                    <span>find</span>
-                                </button>
+                {% include 'include/filter.html' %}
+
+
+                <div class="products-section">
+                    <div style="width: 1000px; height: 50px">
+                        <span class="founded_items">founded <b style="font-size: 16px;">{{ product_count }}</b> items</span>
+                    </div>
+                    <div class="products-list">
+                       {% for product in products %}
+                            <div class="card-item">
+                                <div class="card-image">
+                                    <a href="">
+                                        <img src="{{ product.poster.url }}" alt="{{ product.name }}" style="width: 280px; height: 374px; border-radius: 10px;">
+                                    </a>
+                                </div>
+
+                                <a href="">
+                                    <span class="card-title">
+                                        {{ product.name }}
+                                    </span>
+                                </a>
+                                <span class="card-price">
+                                     {{ product.price }} rub
+                                </span>
+                                <a href="#" class="card-cart">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                </a>
                             </div>
-                        </form>
-
+                        {% endfor %}
                     </div>
                 </div>
 
-                <div class="products-section">
-                   {% for product in product_list %}
-                        <div class="card-item">
-                            <div class="card-image">
-                                <a href="{{ product.get_absolute_url }}">
-                                    <img src="{{ product.poster.url }}" alt="{{ product.name }}" style="width: 280px; height: 374px; border-radius: 10px;">
-                                </a>
-                            </div>
-
-                            <a href="{{ product.get_absolute_url }}">
-                                <span class="card-title">
-                                    {{ product.name }}
-                                </span>
-                            </a>
-                            <span class="card-price">
-                                 {{ product.price }} rub
-                            </span>
-                            <a href="#" class="card-cart">
-                                <i class="fa-solid fa-cart-plus"></i>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-
-                {% include 'pagination.html' %}
+                {% include 'include/pagination.html' %}
 
             </div>
         </div>

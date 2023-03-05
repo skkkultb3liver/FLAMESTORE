@@ -2,24 +2,10 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from products.models import *
+from categories.models import ProductCategory
 
 
 # Register your models here.
-
-@admin.register(ProductCategory)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "url")
-    list_display_links = ("name",)
-
-
-@admin.register(AdditionalProductCategory)
-class AdditionalCategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"url": ("name",)}
-    list_display = ("id", "name", "dress", "url")
-    list_display_links = ("name",)
-
-    list_filter = ("dress",)
-
 
 class ReviewInLine(admin.StackedInline):
     model = Reviews
@@ -40,10 +26,10 @@ class ProductImageInLine(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "stock", "price", "add_category", "url", "get_image")
+    list_display = ("id", "name", "stock", "price", 'category', "modified_date", "url", "get_image")
     prepopulated_fields = {"url": ("name",)}
     list_display_links = ("name",)
-    list_filter = ("add_category",)
+    list_filter = ("category",)
     search_fields = ("name", )
 
     readonly_fields = ("get_image", )

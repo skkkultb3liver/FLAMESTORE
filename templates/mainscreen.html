@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/mainscreen-button.css' %}">
     <link rel="stylesheet" href="{% static 'css/mainscreen.css' %}">
     <link rel="stylesheet" href="{% static 'css/slider.css' %}">
-    <title>FLAMESTORE</title>
+    <title>{{ title }}</title>
 </head>
 <body>
     <header class="header">
@@ -32,7 +32,7 @@
                 <div class="mainscreen__text">
                     <p>NEW VLONE <br> COLLECTION</p>
                     <p>CHOSE YOUR <br> STREET STYLE</p>
-                    <a class="btn btn-4 hover-border-7" href="{% url 'catalog' %}">
+                    <a class="btn btn-4 hover-border-7" href="{% url 'store' %}">
                         <span class="mainscreen__button">
                             GET STARTED
                         </span>

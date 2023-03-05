@@ -143,217 +143,59 @@ body{
     border-bottom: 1px solid #4B4848;
 }
 
-.filter-section__list-gender{
+.category-item{
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding-bottom: 20px;
     width: 245px;
-    padding-top: 25px;
-    margin-left: 25px;
 }
-.filter-section__list-gender li{
-    margin-bottom: 20px;
+.category-item:nth-child(1){
+    padding-top: 20px;
 }
-.list-gender__item-text {
-    display: inline-block;
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    letter-spacing: 0.1em;
-
-    text-transform: uppercase;
-    text-decoration: none;
-
-    color: #FFF;
-}
-.list-gender__item:hover{
-    color: #E94E4E;
-}
-
-
-.form-check-input {
-    background-color: transparent;
-    border: 1px solid rgba(177, 175, 175, 0.25);
-    margin-right: 7px;
-}
-
-.form-check-input[type=checkbox]{
-    border-radius: 0.15em;
-}
-.form-check-input:checked {
-    background-color: rgba(233, 78, 78, 1);
-    border: 1px solid rgba(177, 175, 175, 0.25);
-    box-shadow: none;
-}
-.form-check-input:focus {
-    border: 1px solid rgba(177, 175, 175, 0.25);
-    box-shadow: none;
-}
-.filter-section__list-gender>li:nth-child(2){
-    margin-bottom: 0;
-    padding-bottom: 25px;
+.category-item:nth-last-child(1){
+    padding-bottom: 20px;
     border-bottom: 1px solid #4B4848;
 }
 
-.filter-section__list-clothes{
-    list-style: none;
-    padding: 0;
-    margin-left: 25px;
-    padding-top: 25px;
-    width: 245px;
-    margin-bottom: 0;
-}
-
-#clothingMenuCheckDefault,
-#jeansMenuCheckDefault,
-#shoesMenuCheckDefault,
-#accesMenuCheckDefault {
-    display: none;
-}
-#clothingMenuCheckDefault:checked ~ .filter-section__sub-list-clothes,
-#jeansMenuCheckDefault:checked ~ .filter-section__sub-list-jeans,
-#shoesMenuCheckDefault:checked ~ .filter-section__sub-list-shoes,
-#accesMenuCheckDefault:checked ~ .filter-section__sub-list-acces{
-    display: block;
-}
-
-.list-item{
+.category__item-link{
+    color: rgba(255, 255, 255, 0.76);
     text-decoration: none;
 }
-.list-item:hover span{
-    color: #E94E4E;
-    transition: all 0.2s;
-}
 
-.list-clothes__item-text{
-    width: 200px;
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
+.category__item-span{
+    font-size: 19px;
     text-transform: uppercase;
-
-    background-image: url('/static/vendor/img/products/vph/browse-list-triangle.svg');
-    background-repeat: no-repeat;
-    background-position: right center;
-
-    text-decoration: none;
-
-    color: #FFFFFF;
-
-    padding-right: 20px;
-}
-.list-clothes__item-text:hover{
-    cursor: pointer;
-}
-.filter-section__list-clothes>li{
-    position: relative;
-    margin-bottom: 25px;
-}
-.filter-section__sub-list-clothes,
-.filter-section__sub-list-shoes,
-.filter-section__sub-list-acces{
-    display: none;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    padding-top: 15px;
-    margin-left: 20px;
-}
-.filter-section__sub-list-jeans{
-    display: none;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    padding-top: 15px;
-    margin-left: 20px;
-}
-.list-clothes__sub-item-text {
-    font-family: 'Montserrat';
-    font-style: normal;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 22px;
-    text-transform: uppercase;
-    text-decoration: none;
 
-    color: #FFF;
-}
-.list-clothes__sub-item-text:hover{
-    cursor: pointer;
-}
-.filter-section__sub-list-clothes>li{
-    padding-bottom: 15px;
-}
-.filter-section__sub-list-jeans>li{
-    padding-bottom: 15px;
-}
-.filter-section__sub-list-shoes>li{
-    padding-bottom: 15px;
-}
-.filter-section__sub-list-acces>li{
-    padding-bottom: 15px;
-}
-.filter-section__sub-list-clothes>li:nth-last-child(1){
-    padding-bottom: 10px;
-}
-.filter-section__sub-list-jeans>li:nth-last-child(1){
-    padding-bottom: 10px;
-}
-.filter-section__sub-list-shoes>li:nth-last-child(1){
-    padding-bottom: 10px;
-}
-.filter-section__sub-list-acces>li:nth-last-child(1){
-    padding-bottom: 10px;
-}
-
-.find-button{
-    background-color: transparent;
-    border-radius: 5px;
-    border: 1px solid rgba(233, 89, 89, 0.9);
-
-    margin-left: 82px;
-    margin-top: 15px;
-
-    margin-bottom: 15px;
+    font-family: 'Montserrat';
 
     transition: all 0.1s;
 }
 
-.find-button>span{
-    display: inline-block;
-    padding: 8px 25px;
-
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-
-    color: rgba(233, 89, 89, 0.9);
-    text-transform: uppercase;
-
-}
-
-.find-button:hover{
-    background-color: rgba(233, 89, 89, 0.9);
-}
-.find-button:hover>span{
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 20px;
-    line-height: 24px;
+.category__item-span:hover{
+    color: rgba(237, 96, 96, 1);
 }
 
 
 /*===================== product section ====================== */
 .products-section{
+    display: flex;
+    flex-direction: column;
+}
+.products-list{
     display: grid;
     grid-template-columns: 280px 280px 280px;
     column-gap: 90px;
     row-gap: 35px;
+}
+
+.founded_items {
+    font-size: 15px;
+    color: rgba(216, 212, 212, 0.77);
+
+    font-family: 'Montserrat';
+    text-transform: uppercase;
+
+    letter-spacing: 0.1em;
 }
 
 .card-item {
@@ -447,6 +289,13 @@ body{
     color: rgba(20, 20, 20, 1);
     border: none;
     box-shadow: none;
+}
+
+.p-dots {
+    font-size: 15px;
+
+    display: inline-block;
+    height: 60px;
 }
 
 /* ==================================================FOOTER================================================= */

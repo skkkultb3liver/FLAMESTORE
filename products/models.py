@@ -1,33 +1,9 @@
 from django.db import models
 from django.urls import reverse
 
+from categories.models import ProductCategory
+
 # Create your models here.
-
-
-
-class ProductCategory(models.Model):
-    name = models.CharField("Genre category", max_length=64, unique=True)
-    url = models.SlugField(max_length=128, blank=True, unique=True)
-
-    class Meta:
-        verbose_name = 'Product category'
-        verbose_name_plural = 'Product categories'
-
-    def __str__(self):
-        return self.name
-
-
-class AdditionalProductCategory(models.Model):
-    name = models.CharField("Category", max_length=64, unique=True)
-    url = models.SlugField(max_length=128, blank=True, unique=True)
-    dress = models.CharField("Dress", max_length=64, blank=True, default="dress")
-
-    class Meta:
-        verbose_name = 'Additional product category'
-        verbose_name_plural = 'Additional product categories'
-
-    def __str__(self):
-        return self.name
 
 
 class Product(models.Model):
@@ -39,8 +15,7 @@ class Product(models.Model):
     sizing = models.TextField(max_length=568, blank=True)
     fabric = models.TextField(max_length=568, blank=True)
     price = models.IntegerField()
-    category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True)
-    add_category = models.ForeignKey(AdditionalProductCategory, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     stock = models.IntegerField(default=1)
     upload_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -53,7 +28,7 @@ class Product(models.Model):
         verbose_name_plural = 'Products'
 
     def __str__(self):
-        return f'{self.name} | {self.category.name} | {self.add_category.name}'
+        return f'{self.name} | {self.category.name}'
 
 
 class ProductImage(models.Model):
