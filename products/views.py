@@ -36,6 +36,19 @@ def product_view(request, category_slug=None):
     return render(request, 'products/product_list.html', context)
 
 
+def product_detail(request, category_slug, product_slug):
+    try:
+        single_product = Product.objects.get(category__slug=category_slug, url=product_slug)
+    except Exception as e:
+        raise Exception
+
+    context = {
+        'single_product': single_product,
+    }
+
+    return render(request, 'products/product_detail.html', context)
+
+
 class AddReview(View):
 
     def post(self, request, pk):

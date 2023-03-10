@@ -6,7 +6,7 @@ from .models import ProductCategory
 
 @admin.register(ProductCategory)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "slug")
+    list_display = ("id", "name", "key", "slug")
     prepopulated_fields = {"slug": ("name",)}
     list_display_links = ("name",)
 

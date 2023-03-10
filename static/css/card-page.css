@@ -103,7 +103,7 @@
   border: none;
   background-color: rgb(20, 20, 20);
   opacity: 0.9;
-  margin-top: 55px;
+  margin-top: 75px;
 }
 .card-info__button span {
   display: inline-block;
@@ -125,6 +125,17 @@
 }
 .card-info__button:hover {
   opacity: 1;
+}
+.stock_warn{
+  color: rgba(192, 35, 35, 0.91);
+  font-size: 22px;
+  font-family: 'Montserrat';
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+
+  margin-top: 75px;
+
 }
 .card-info__accordion {
   width: 76%;

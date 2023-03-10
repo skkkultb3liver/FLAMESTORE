@@ -17,12 +17,12 @@
                        {% for product in products %}
                             <div class="card-item">
                                 <div class="card-image">
-                                    <a href="">
+                                    <a href="{{ product.get_absolute_url }}">
                                         <img src="{{ product.poster.url }}" alt="{{ product.name }}" style="width: 280px; height: 374px; border-radius: 10px;">
                                     </a>
                                 </div>
 
-                                <a href="">
+                                <a href="{{ product.get_absolute_url }}">
                                     <span class="card-title">
                                         {{ product.name }}
                                     </span>

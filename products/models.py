@@ -21,7 +21,7 @@ class Product(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse("product", kwargs={"slug": self.url})
+        return reverse("product_detail", args=[self.category.slug, self.url])
 
     class Meta:
         verbose_name = 'Product'
