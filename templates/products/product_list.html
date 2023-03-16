@@ -16,7 +16,11 @@
                     <div class="products-list">
                        {% for product in products %}
                             <div class="card-item">
-                                <div class="card-image">
+                                <a href="{% url 'add_cart' product.id %}" class="card-image__add-to-cart" style="z-index: 1;">
+                                    <span class="text-center">add to cart</span>
+                                </a>
+                                <div class="card-image" style="z-index: 2;">
+
                                     <a href="{{ product.get_absolute_url }}">
                                         <img src="{{ product.poster.url }}" alt="{{ product.name }}" style="width: 280px; height: 374px; border-radius: 10px;">
                                     </a>
@@ -30,9 +34,9 @@
                                 <span class="card-price">
                                      {{ product.price }} rub
                                 </span>
-                                <a href="#" class="card-cart">
-                                    <i class="fa-solid fa-cart-plus"></i>
-                                </a>
+{#                                <a href="{% url 'add_cart' product.id %}" class="card-cart">#}
+{#                                    <i class="fa-solid fa-cart-plus"></i>#}
+{#                                </a>#}
                             </div>
                         {% endfor %}
                     </div>

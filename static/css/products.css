@@ -6,6 +6,14 @@ body{
     background-repeat: no-repeat;
 
     padding-top: 170px;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
 }
 
 .container {
@@ -51,12 +59,10 @@ body{
     color: #FFFFFF;
 }
 
-.nav-item>i{
+.nav-item>svg{
     color: rgba(255, 255, 255, 0.76);
     font-size: 14px;
 
-    margin-left: 20px;
-    margin-bottom: 8px;
 }
 
 .navbar-brand>span{
@@ -95,7 +101,6 @@ body{
 
 .fa-cart-shopping {
     color: #fff;
-    margin-left: 10px;
 }
 
 
@@ -206,6 +211,42 @@ body{
     background-color: rgba(20, 20, 20, 1);
     border-radius: 10px;
 }
+
+.card-item:hover .card-image__add-to-cart {
+    display: flex;
+}
+
+.card-image__add-to-cart {
+    color: #000 !important;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 0 0 9px 9px;
+    position: absolute;
+    top: 324px;
+    width: 100%;
+    height: 50px;
+
+
+    display: none;
+    justify-content: center;
+
+}
+.card-image__add-to-cart:hover span {
+    color: rgba(241, 237, 237, 1);
+}
+
+.card-image__add-to-cart span {
+    display: inline-block;
+    font-family: 'Montserrat';
+    color: rgba(241, 237, 237, 0.82);
+    text-transform: uppercase;
+    font-size: 17px;
+
+    align-self: center;
+
+}
+
+
 .card-title{
     display: inline-block;
 
@@ -302,8 +343,11 @@ body{
 
 footer{
     background-color: rgba(20, 20, 20, 1);
-    margin-top: 75px;
     width: 100%;
+
+    flex-shrink: 0;
+
+    margin-top: 70px;
 }
 footer .col{
     padding-top: 30px;

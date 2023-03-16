@@ -82,10 +82,10 @@
                     </div>
 
                     {% if single_product.stock > 0 %}
-                        <button type="button" class="card-info__button">
+                        <a href="{% url 'add_cart' single_product.id %}" type="button" class="card-info__button">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span>add to cart</span>
-                        </button>
+                        </a>
                     {% else %}
                         <div class="stock_warn">
                             <i class="fa-solid fa-circle-exclamation"></i>

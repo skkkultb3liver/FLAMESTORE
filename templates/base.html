@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
     <link rel="stylesheet" href="{% static 'css/modal-login.css' %}">
     <link rel="stylesheet" href="{% static 'css/user-dropdown-menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cart-dropdown.css' %}">
     <link rel="stylesheet" href="{% static 'css/products.css' %}">
 
     {% block css %} {% endblock %}
@@ -63,10 +64,45 @@
                             </ul>
                         </div>
 
+                        <div class="cart-block">
+                            <a href="{% url 'cart' %}" class="nav-item user-cart">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
 
-                        <a href="#" class="nav-item user-cart">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </a>
+
+                            <div class="cart-block__dropdown">
+                                <div class="cart-block__dropdown-sly">
+                                    <div class="cart-block__dropdown-sly-container">
+                                        <div class="cart-block__dropdown-sly-container__header">
+                                            <span>cart</span>
+                                        </div>
+
+                                        <div class="cart-block__dropdown-sly-container__body">
+                                            {% for cart_item in cart_items %}
+                                                <div class="cart-block__dropdown-sly-container__body-item">
+                                                    <div class="cart-block__dropdown-sly-container__body-item__img">
+                                                        <img style="width: 85px; height: auto; border-radius: 5px" src="{{ cart_item.product.poster.url }}" alt="">
+                                                    </div>
+
+                                                    <div class="cart-block__dropdown-sly-container__body-item__desc">
+                                                        <span class="item-name">{{ cart_item.product.name }}</span>
+                                                        <span>size: {{ cart_item.product.size }}</span>
+                                                        <span>price: {{ cart_item.product.price }} RUB</span>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+                                        <div class="cart-block__dropdown-sly-container__footer">
+                                            <a href="{% url 'cart' %}" class="cart-block__dropdown-sly-container__footer-link">
+                                                <span>go to my cart</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
