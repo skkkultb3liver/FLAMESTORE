@@ -1,4 +1,4 @@
-
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import View
@@ -78,3 +78,17 @@ class AddReview(View):
         return redirect(product.get_absolute_url())
 
 
+def search(request):
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+
+        if keyword:
+            products = Product.objects.order_by('-upload_date').filter(Q(name__icontains=keyword) | Q(category__name__icontains=keyword))
+            pc = products.count()
+
+    context = {
+        'products': products,
+        'product_count': pc,
+    }
+
+    return render(request, 'products/product_list.html', context)
