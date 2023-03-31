@@ -52,7 +52,7 @@
                                     </a>
                                 </li>
                                 <li class="user-drop-down-menu__item">
-                                    <a href="#">
+                                    <a href="{% url 'cart' %}">
                                         <span>cart</span>
                                     </a>
                                 </li>
@@ -65,7 +65,10 @@
                         </div>
 
                         <div class="cart-block">
-                            <a href="{% url 'cart' %}" class="nav-item user-cart">
+                            <a href="{% url 'cart' %}" class="nav-item user-cart" style="z-index: 1">
+                                <div class="user-cart__nots" style="z-index: 2">
+                                    <span>{{ cart_item_counter }}</span>
+                                </div>
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </a>
 
@@ -86,7 +89,13 @@
 
                                                     <div class="cart-block__dropdown-sly-container__body-item__desc">
                                                         <span class="item-name">{{ cart_item.product.name }}</span>
-                                                        <span>size: {{ cart_item.product.size }}</span>
+                                                        <span>size:
+                                                            {% if cart_item.variation.all %}
+                                                                {% for var in cart_item.variation.all %}
+                                                                    {{ var.variation_value }}
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </span>
                                                         <span>price: {{ cart_item.product.price }} RUB</span>
                                                     </div>
                                                 </div>

@@ -32,6 +32,7 @@ document.addEventListener('click', (event) => {
         const modal = event.target.closest(`.${CLASS_LIST.MODAL}`);
 
         document.body.style.overflow = 'visible';
+        document.body.style.paddingRight = '0';
         modal.classList.remove(CLASS_LIST.MODAL_ACTIVE);
     }
 });

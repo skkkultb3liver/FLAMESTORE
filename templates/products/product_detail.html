@@ -18,81 +18,117 @@
                     {% endfor %}
                 </div>
 
+
                 <div class="col-6 card-info">
-                    <div class="card-info__header">
-                        <h1 class="card-info__header__card-title">{{ single_product.name }}</h1>
 
-                        <span class="card-info__header__price">{{ single_product.price }} rub</span>
-                    </div>
-                    <div class="card-info__indent">
-                    </div>
-                    <div class="card-info__size-bar">
-                        <h1 class="card-info__size-bar__title">item size:<b> {{ single_product.size }} </b> </h1>
+                    <form class="card-info-form" style="width: 100%" action="{% url 'add_cart' single_product.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="card-info__header">
+                            <h1 class="card-info__header__card-title">{{ single_product.name }}</h1>
 
-                        <a href="" class="card-info__size-bar__chart">
-                            <span> size chart </span>
-                        </a>
-                    </div>
-                    <div class="card-info__indent">
-                    </div>
-
-                    <div class="accordion card-info__accordion" id="accordionExample">
-                        <div class="accordion-item card-info__accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <span>DESCRIPTION</span>
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>
-                                        {{ single_product.description }}
-                                    </p>
-                                </div>
-                          </div>
+                            <span class="card-info__header__price">{{ single_product.price }} rub</span>
                         </div>
-                        <div class="accordion-item card-info__accordion-item">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <span>FIT + SIZING</span>
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>
-                                        {{ single_product.sizing }}
-                                    </p>
+                        <div class="card-info__indent">
+                        </div>
+
+                        <div class="card-info__size-bar">
+                            <div class="card-info__size-bar__title">
+                                <span>select size:</span>
+
+
+                                <div class="size-select_wrapper">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                    <select name="size" class="form-control-sm size-select" required style="font-weight: 600">
+                                        <option value="" disabled selected></option>
+                                        {% for i in single_product.variation_set.sizes %}
+                                            <option value="{{ i.variation_value | lower }}">{{ i.variation_value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <a href="" class="card-info__size-bar__chart">
+                                <span> size chart </span>
+                            </a>
+                        </div>
+
+
+                        <div class="card-info__indent">
+                        </div>
+
+                        <div class="accordion card-info__accordion" id="accordionExample">
+                            <div class="accordion-item card-info__accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <span>DESCRIPTION</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <p>
+                                            {{ single_product.description }}
+                                        </p>
+                                    </div>
+                              </div>
+                            </div>
+                            <div class="accordion-item card-info__accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <span>FIT + SIZING</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <p>
+                                            {{ single_product.sizing }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item card-info__accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <span>FABRIC + CARE</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <p>
+                                            {{ single_product.fabric }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="accordion-item card-info__accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    <span>FABRIC + CARE</span>
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>
-                                        {{ single_product.fabric }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    {% if single_product.stock > 0 %}
-                        <a href="{% url 'add_cart' single_product.id %}" type="button" class="card-info__button">
-                            <i class="fa-solid fa-cart-plus"></i>
-                            <span>add to cart</span>
-                        </a>
-                    {% else %}
-                        <div class="stock_warn">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            <span>out of stock</span>
-                        </div>
-                    {% endif %}
+
+{#                        {% if in_cart %}#}
+{#                            <button href="#" type="button" class="card-info__button" disabled style="opacity: 0.9">#}
+{#                                <i class="fa-solid fa-check"></i>#}
+{#                                <span>added to cart</span>#}
+{#                            </button>#}
+{#                            <div class="if-in_cart">#}
+{#                                <a href="{% url 'cart' %}" style="">Go to my cart</a>#}
+{#                            </div>#}
+{##}
+{#                        {% else %}#}
+                        {% if single_product.stock > 0 %}
+                            <button type="submit" class="card-info__button">
+                                <i class="fa-solid fa-cart-plus"></i>
+                                <span>add to cart</span>
+                            </button>
+                        {% else %}
+                            <div class="stock_warn">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span>out of stock</span>
+                            </div>
+                        {% endif %}
+{#                        {% endif %}#}
+
+                    </form>
+
                 </div>
+
             </div>
             <div class="review-send-block row g-3 align-items-center">
 {#                <form action="{% url 'add_review' product.id %}" method="post" class="col-10">#}

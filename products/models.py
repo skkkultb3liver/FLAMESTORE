@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from categories.models import ProductCategory
 
+
 # Create your models here.
 
 
@@ -11,7 +12,6 @@ class Product(models.Model):
     url = models.SlugField(max_length=128, blank=True, unique=True)
     poster = models.ImageField(upload_to='products_posters/', blank=True)
     description = models.TextField(max_length=568, blank=True)
-    size = models.CharField(max_length=36, blank=True)
     sizing = models.TextField(max_length=568, blank=True)
     fabric = models.TextField(max_length=568, blank=True)
     price = models.IntegerField()
@@ -29,6 +29,32 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name} | {self.category.name}'
+
+
+variation_category_choice = (
+    ('size', 'size'),
+)
+
+
+class VariationManager(models.Manager):
+    def sizes(self):
+        return super(VariationManager, self).filter(variation_category='size', is_active=True)
+
+
+class Variation(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variation_category = models.CharField(max_length=100, choices=variation_category_choice)
+    variation_value = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    date_created = models.DateTimeField(auto_now=True)
+
+    objects = VariationManager()
+
+    def __str__(self):
+        return f'{self.variation_value} for {self.product.name}'
+
+
+
 
 
 class ProductImage(models.Model):
@@ -78,7 +104,6 @@ class Reviews(models.Model):
 
     def __str__(self):
         return f'Review for {self.product}'
-
 
 #
 #

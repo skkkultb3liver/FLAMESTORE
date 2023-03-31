@@ -29,7 +29,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "stock", "price", 'category', "modified_date", "url", "get_image")
     prepopulated_fields = {"url": ("name",)}
     list_display_links = ("name",)
-    list_filter = ("category",)
+    list_filter = ("category", )
     search_fields = ("name", )
 
     readonly_fields = ("get_image", )
@@ -42,6 +42,14 @@ class ProductAdmin(admin.ModelAdmin):
         return mark_safe(f'<img src={obj.poster.url} width="60" height="auto">')
 
     get_image.short_description = "Image"
+
+
+@admin.register(Variation)
+class VariationAdmin(admin.ModelAdmin):
+    list_display = ("id", "product", "variation_value", "is_active")
+    list_display_links = ("id", "product")
+    list_editable = ("is_active", )
+    list_filter = ("product", "is_active",)
 
 
 @admin.register(ProductImage)
