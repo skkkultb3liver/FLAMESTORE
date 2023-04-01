@@ -14,8 +14,11 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 def mainscreen(request):
     title = 'FLAMESTORE'
+
+    products = Product.objects.order_by('-upload_date')
     context = {
-        'title': title
+        'title': title,
+        'u_products': products,
     }
     return render(request, 'mainscreen.html', context)
 
