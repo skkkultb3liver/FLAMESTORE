@@ -53,7 +53,7 @@ def register(request):
 
             # messages.success(request, f'An email was sent to {to_email} to activate your account.')
 
-            return redirect(f'/accounts/register/?command=verification&email={email}')
+            return redirect(f"/accounts/register/?command=verification&email={email}")
 
     else:
         form = RegisterForm()
@@ -70,15 +70,14 @@ def login(request):
         email = request.POST['email']
         password = request.POST['password']
 
-        print(email, password)
-
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
             auth.login(request, user)
-            return redirect('store')
+            messages.success(request, "You're now logged in!")
+            return redirect('profile')
         else:
-            messages.error(request, 'Invalid login credentials')
+            messages.error(request, "Invalid login credentials.")
             return redirect('login')
     return render(request, "accounts/login.html")
 
@@ -96,6 +95,7 @@ def activate(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = Account._default_manager.get(pk=uid)
+
     except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
         user = None
 
@@ -106,6 +106,78 @@ def activate(request, uidb64, token):
 
         return redirect('login')
     else:
-        messages.error(request, 'Invalid activation link')
+        messages.error(request, 'Invalid activation link.')
 
         return redirect('register')
+
+
+@login_required(login_url='login')
+def profile(request):
+    return render(request, 'accounts/profile-info.html')
+
+
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+
+        if Account.objects.filter(email=email).exists():
+            user = Account.objects.get(email__exact=email)
+
+            current_site = get_current_site(request)
+            mail_subj = "Reset your password"
+            msg = render_to_string('accounts/reset_password_alert.html', {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+            })
+            to_email = email
+            send_email = EmailMessage(mail_subj, msg, to=[to_email])
+            send_email.send()
+
+            messages.success(request, 'Password reset has sent to your email address.')
+            return redirect('login')
+
+        else:
+            messages.error(request, 'Account with such an email does not exist.')
+            return redirect('forgot_password')
+
+    return render(request, 'accounts/forgot_password.html')
+
+
+def reset_password_validate(request, uidb64, token):
+
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = Account._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        request.session['uid'] = uid
+        messages.success(request, 'Please reset your password.')
+        return redirect('reset_password')
+    else:
+        messages.error(request, 'This link has been expired.')
+        return redirect('login')
+
+
+def reset_password(request):
+
+    if request.method == 'POST':
+        password = request.POST['new_password']
+        c_password = request.POST['confirm_password']
+
+        if password == c_password:
+            uid = request.session.get('uid')
+            user = Account.objects.get(pk=uid)
+            user.set_password(password)
+            user.save()
+            messages.success(request, 'Password was successfully changed!')
+            return redirect('login')
+        else:
+            messages.error(request, 'Passwords dont match.')
+            return redirect('reset_password')
+
+    else:
+        return render(request, 'accounts/reset_password.html')
