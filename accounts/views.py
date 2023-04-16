@@ -8,11 +8,17 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage
 
+from cart.models import Cart, CartItem
+from cart.views import _cart_id
 from .forms import RegisterForm
 from django.contrib import messages, auth
 
+from django.utils.http import urlencode
+
 # Create your views here.
 from .models import Account
+import requests
+import urlparse3
 
 
 def register(request):
@@ -73,12 +79,67 @@ def login(request):
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
+            try:
+                cart = Cart.objects.get(cart_id=_cart_id(request))
+                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
+
+                if is_cart_item_exists:
+                    cart_item = CartItem.objects.filter(cart=cart)
+                    product_variation_list = []
+
+                    for item in cart_item:
+                        var = item.variation.all()
+                        product_variation_list.append(list(var))
+
+                    cart_item = CartItem.objects.filter(user=user)
+                    ex_vars_list = []
+                    id_item_list = []
+
+                    for item in cart_item:
+                        ex_variation = item.variation.all()
+                        ex_vars_list.append(list(ex_variation))
+                        id_item_list.append(item.id)
+
+                    for p in product_variation_list:
+                        if p in ex_vars_list:
+                            ind = ex_vars_list.index(p)
+                            item_id = id_item_list[ind]
+
+                            item = CartItem.objects.get(id=item_id)
+                            item.qty += 1
+                            item.user = user
+                            item.save()
+
+                        else:
+                            cart_item = CartItem.objects.filter(cart=cart)
+
+                            for item in cart_item:
+                                item.user = user
+                                item.save()
+            except:
+                pass
+
             auth.login(request, user)
             messages.success(request, "You're now logged in!")
-            return redirect('profile')
+
+            url = request.META.get('HTTP_REFERER')
+
+            try:
+                query = requests.utils.urlparse(url).query
+                params = dict(x.split('=') for x in query.split('&'))
+                print(params)
+                if 'next' in params:
+                    next_page = params['next']
+                    print(next_page)
+                    return redirect(next_page)
+
+            except:
+                return redirect('profile')
+
         else:
             messages.error(request, "Invalid login credentials.")
             return redirect('login')
+
     return render(request, "accounts/login.html")
 
 
@@ -150,6 +211,7 @@ def reset_password_validate(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = Account._default_manager.get(pk=uid)
+
     except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
         user = None
 
