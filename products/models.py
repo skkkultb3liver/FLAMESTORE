@@ -55,8 +55,6 @@ class Variation(models.Model):
 
 
 
-
-
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='products_images/', blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
