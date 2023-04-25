@@ -27,11 +27,11 @@ class Order(models.Model):
     )
 
     user = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
-    paument = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
-    order_number = models.CharField(max_length=20)
+    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
+    order_number = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    phone = models.CharField(max_length=15)
+    phone = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
     address_line_1 = models.CharField(max_length=50)
     address_line_2 = models.CharField(max_length=50, blank=True)
@@ -39,14 +39,14 @@ class Order(models.Model):
     city = models.CharField(max_length=50)
     order_total = models.IntegerField()
     tax = models.IntegerField()
-    status = models.CharField(max_length=15, choices=STATUS, default='New')
+    status = models.CharField(max_length=50, choices=STATUS, default='New')
     ip = models.CharField(max_length=50, blank=True)
     ip_ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.first_name
+        return self.first_name
 
 
 class OrderProduct(models.Model):
@@ -54,7 +54,7 @@ class OrderProduct(models.Model):
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, null=True, blank=True)
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    variation = models.ForeignKey(Variation, on_delete=models.CASCADE)
+    variation = models.ManyToManyField(Variation, null=True)
     size = models.CharField(max_length=15)
     qty = models.IntegerField()
     product_price = models.FloatField()
