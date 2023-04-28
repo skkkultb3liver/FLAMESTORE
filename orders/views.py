@@ -1,4 +1,10 @@
 import datetime
+
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -23,6 +29,7 @@ def payments(request):
 
     order.payment = payment
     order.ip_ordered = True
+    order.status = 'Accepted'
     order.save()
 
     cart_items = CartItem.objects.filter(user=current_user)
@@ -46,11 +53,34 @@ def payments(request):
         order_product = OrderProduct.objects.get(id=order_product.id)
         order_product.variation.set(product_variation)
 
-
         order_product.save()
 
+        #REDUCE PRODUCT QTY AFTER ORDERING
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= order_product.qty
+        product.save()
 
-    return render(request, 'orders/payments.html')
+    #CLEAR CART AFTER ORDERiNG
+    CartItem.objects.filter(user=request.user).delete()
+
+    #ORDER RECEIVED MAIL
+    mail_subj = "Thank you for your order!"
+    msg = render_to_string('orders/order_recieve.html', {
+        'user': request.user,
+        'order': order,
+    })
+    to_email = request.user.email
+    send_email = EmailMessage(mail_subj, msg, to=[to_email])
+    send_email.send()
+
+    # ==========================================================
+
+    data = {
+        'order_number': order.order_number,
+        'p_id': payment.payment_id,
+    }
+
+    return redirect(order_complete, order_number=order.order_number)
 
 
 @require_http_methods(['POST'])
@@ -71,10 +101,11 @@ def place_order(request, total=0, qty=0):
         total += (cart_item.product.price * cart_item.qty)
         qty += cart_item.qty
 
-    tax = (2 * total) / 100
+    tax = int((2 * total) // 100)
     grand_total = total + tax
 
     if request.method == 'POST':
+
         form = OrderForm(request.POST)
         print(f'request: {request.method}')
 
@@ -140,3 +171,28 @@ def place_order(request, total=0, qty=0):
             print(form.errors)
 
     return render(request, 'products/checkout.html')
+
+
+def order_complete(request, order_number):
+
+    try:
+        order = Order.objects.filter(user=request.user, ip_ordered=True, order_number=order_number).order_by('-id')[0]
+        products = OrderProduct.objects.filter(user=request.user, order=order)
+
+        subtotal = 0
+
+        for i in products:
+            subtotal += i.product.price * i.qty
+
+        context = {
+            'order': order,
+            'products': products,
+
+            'subtotal': subtotal,
+        }
+
+        return render(request, 'orders/order_complete.html', context)
+
+    except (Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect('store')
+

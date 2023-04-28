@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from products.models import Product, Variation
 from .models import *
+from django.contrib import messages
 
 
 # Create your views here.
@@ -48,7 +49,11 @@ def add_cart(request, product_id):
                 index = ex_vars_list.index(product_variation_list)
                 item_id = id_item_list[index]
                 item = CartItem.objects.get(product=product, id=item_id)
-                item.qty += 1
+
+                if item.qty < product.stock:
+                    item.qty += 1
+                else:
+                    messages.error(request, "You are over the limit")
                 item.save()
 
             else:
@@ -84,8 +89,6 @@ def add_cart(request, product_id):
             except:
                 pass
 
-
-
         try:
             cart = Cart.objects.get(cart_id=_cart_id(request))
 
@@ -112,7 +115,11 @@ def add_cart(request, product_id):
                 index = ex_vars_list.index(product_variation_list)
                 item_id = id_item_list[index]
                 item = CartItem.objects.get(product=product, id=item_id)
-                item.qty += 1
+
+                if item.qty < product.stock:
+                    item.qty += 1
+                else:
+                    messages.error(request, "You are over the limit")
                 item.save()
 
             else:
@@ -189,7 +196,7 @@ def cart(request, total=0, qty=0, cart_items=None):
             total += cart_item.product.price * cart_item.qty
             qty += cart_item.qty
 
-        tax = (2 * total) / 100
+        tax = int((2 * total) // 100)
         grand_total = tax + total
 
     except ObjectDoesNotExist:
