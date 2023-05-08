@@ -6,7 +6,7 @@ for (item of items) {
 }
 
 if (count === 1) {
-    document.getElementById('cart-js').style.height= "230px"
+    document.getElementById('cart-js').style.height= "250px"
 } else if (count === 0) {
     document.getElementById('cart-js').style.height= "200px"
 }

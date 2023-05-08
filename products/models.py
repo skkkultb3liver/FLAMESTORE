@@ -1,7 +1,9 @@
 from django.db import models
+from django.db.models import Avg
 from django.urls import reverse
 
 from categories.models import ProductCategory
+from accounts.models import *
 
 
 # Create your models here.
@@ -23,12 +25,24 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("product_detail", args=[self.category.slug, self.url])
 
+
+    def calc_avg_rating(self):
+        reviews = ReviewsRating.objects.filter(product=self, status=True).aggregate(average=Avg('rating'))
+        avg = 0
+
+        if reviews['average'] is not None:
+            avg = float(reviews['average'])
+
+        return round(avg, 1)
+
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
 
     def __str__(self):
         return f'{self.name} | {self.category.name}'
+
+
 
 
 variation_category_choice = (
@@ -55,8 +69,6 @@ class Variation(models.Model):
 
 
 
-
-
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='products_images/', blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -69,49 +81,22 @@ class ProductImage(models.Model):
         return f'IMAGE FOR {self.product.name}'
 
 
-class RatingStar(models.Model):
-    value = models.PositiveSmallIntegerField('Value', default=0)
-
-    class Meta:
-        verbose_name = 'Rating star'
-        verbose_name_plural = 'Rating stars'
-        ordering = ["-value"]
-
-    def __str__(self):
-        return f'{self.value}'
-
-
-class Rating(models.Model):
-    ip = models.CharField('IP adress', max_length=20)
-    star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name='star')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='product')
+class ReviewsRating(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=128, blank=True)
+    review = models.TextField(max_length=500, blank=True)
+    rating = models.PositiveIntegerField()
+    ip = models.CharField(max_length=20, blank=True)
+    status = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.star} - {self.product}'
+        return self.subject
 
-    class Meta:
-        verbose_name = 'Rating'
-        verbose_name_plural = 'Ratings'
+    def get_created_at(self):
+        return self.created_at.date().strftime('%d.%m.%Y')
 
-
-class Reviews(models.Model):
-    text = models.TextField(max_length=5000)
-    product = models.ForeignKey(Product, verbose_name='Product', on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'Review'
-        verbose_name_plural = 'Reviews'
-
-    def __str__(self):
-        return f'Review for {self.product}'
-
-#
-#
-# class Customer(models.Model):
-#
-#     user = models.ForeignKey(User, verbose_name='User', on_delete=models.CASCADE)
-#     phone = models.CharField(max_length=20, verbose_name='Phone number', null=True, blank=True)
-#     address = models.CharField(max_length=255, verbose_name='Address', null=True, blank=True)
-#
-#     def __str__(self):
-#         return f"Customer: {self.user.first_name} {self.user.last_name}"
+    def get_updated_at(self):
+        return self.updated_at.date().strftime('%d.%m.%Y')

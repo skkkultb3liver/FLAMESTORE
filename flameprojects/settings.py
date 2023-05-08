@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from django.contrib.messages import constants as messages
 from pathlib import Path
 import os
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts',
     'categories',
     'cart',
+    'orders',
 
 ]
 
@@ -146,5 +147,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # SCRAPING
 
 URL_SCRAPING_DOMAIN = "https://www.truereligion.com"
+
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'wrong',
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'flamestore900@gmail.com'
+EMAIL_HOST_PASSWORD = 'ebkuqybbxhisvxbz'
 
 
