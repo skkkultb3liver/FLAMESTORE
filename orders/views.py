@@ -8,6 +8,9 @@ from django.utils.http import urlsafe_base64_encode
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+
+from products.forms import ReviewForm
+from products.models import ReviewsRating
 from .forms import *
 from cart.models import CartItem
 from .models import *
@@ -187,7 +190,6 @@ def order_complete(request, order_number):
         context = {
             'order': order,
             'products': products,
-
             'subtotal': subtotal,
         }
 

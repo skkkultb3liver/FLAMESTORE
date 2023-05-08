@@ -7,10 +7,6 @@ from categories.models import ProductCategory
 
 # Register your models here.
 
-class ReviewInLine(admin.StackedInline):
-    model = Reviews
-    extra = 1
-
 
 class ProductImageInLine(admin.TabularInline):
     model = ProductImage
@@ -29,12 +25,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "stock", "price", 'category', "modified_date", "url", "get_image")
     prepopulated_fields = {"url": ("name",)}
     list_display_links = ("name",)
-    list_filter = ("category", )
-    search_fields = ("name", )
+    list_filter = ("category",)
+    search_fields = ("name",)
 
-    readonly_fields = ("get_image", )
+    readonly_fields = ("get_image",)
 
-    inlines = [ProductImageInLine, ReviewInLine]
+    inlines = [ProductImageInLine]
 
     save_on_top = True
 
@@ -48,7 +44,7 @@ class ProductAdmin(admin.ModelAdmin):
 class VariationAdmin(admin.ModelAdmin):
     list_display = ("id", "product", "variation_value", "is_active")
     list_display_links = ("id", "product")
-    list_editable = ("is_active", )
+    list_editable = ("is_active",)
     list_filter = ("product", "is_active",)
 
 
@@ -56,7 +52,7 @@ class VariationAdmin(admin.ModelAdmin):
 class ProductImageAdmin(admin.ModelAdmin):
     list_display = ("id", "product", "get_image")
     list_display_links = ("id", "product")
-    readonly_fields = ("get_image", )
+    readonly_fields = ("get_image",)
 
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} width="45" height="auto">')
@@ -64,12 +60,4 @@ class ProductImageAdmin(admin.ModelAdmin):
     get_image.short_description = "Image"
 
 
-@admin.register(Reviews)
-class Reviewadmin(admin.ModelAdmin):
-    list_display = ("id", "product")
-    list_display_links = ("id",)
-
-
-admin.site.register(Rating)
-admin.site.register(RatingStar)
-
+admin.site.register(ReviewsRating)

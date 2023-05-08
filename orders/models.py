@@ -1,8 +1,5 @@
 from django.db import models
 from accounts.models import *
-
-
-# Create your models here.
 from products.models import Product, Variation
 
 
@@ -45,8 +42,15 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+    def get_fullname(self):
+        return self.first_name + self.last_name
+
     def __str__(self):
         return self.first_name
+
+    def get_subtotal(self):
+        return self.order_total - self.tax
 
 
 class OrderProduct(models.Model):
@@ -64,3 +68,8 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return self.product.name
+
+
+
+
+
