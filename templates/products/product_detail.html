@@ -4,6 +4,7 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/slider.css' %}">
     <link rel="stylesheet" href="{% static 'css/card-page.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 {% endblock %}
 
 {% block content %}
@@ -21,12 +22,29 @@
 
                 <div class="col-6 card-info">
 
-                    <form class="card-info-form" style="width: 100%" action="{% url 'add_cart' single_product.id %}" method="POST">
+                    <form class="card-info-form" action="{% url 'add_cart' single_product.id %}" method="POST">
                         {% csrf_token %}
                         <div class="card-info__header">
                             <h1 class="card-info__header__card-title">{{ single_product.name }}</h1>
 
                             <span class="card-info__header__price">{{ single_product.price }} rub</span>
+
+
+                            <div class="mb-3 mt-3 review-rating">
+                                <span>
+{#                                    <i class="fa-solid fa-star"></i>#}
+{#                                    <i class="fa-regular fa-star"></i>#}
+{#                                    <i class="fa-solid fa-star-half-stroke"></i>#}
+
+                                    <i class="{% if single_product.calc_avg_rating >= 1 %} fa-solid fa-star {% elif single_product.calc_avg_rating < 0.5 %} fa-regular fa-star  {% elif single_product.calc_avg_rating >= 0.5 and single_product.calc_avg_rating < 1%} fa-solid fa-star {% endif %}"></i>
+                                    <i class="{% if single_product.calc_avg_rating >= 2 %} fa-solid fa-star {% elif single_product.calc_avg_rating < 1.5 %} fa-regular fa-star  {% elif single_product.calc_avg_rating >= 1.5 and single_product.calc_avg_rating < 2%} fa-solid fa-star {% endif %}"></i>
+                                    <i class="{% if single_product.calc_avg_rating >= 3 %} fa-solid fa-star {% elif single_product.calc_avg_rating < 2.5 %} fa-regular fa-star  {% elif single_product.calc_avg_rating >= 2.5 and single_product.calc_avg_rating < 3%} fa-solid fa-star {% endif %}"></i>
+                                    <i class="{% if single_product.calc_avg_rating >= 4 %} fa-solid fa-star {% elif single_product.calc_avg_rating < 3.5 %} fa-regular fa-star  {% elif single_product.calc_avg_rating >= 3.5 and single_product.calc_avg_rating < 4%} fa-solid fa-star {% endif %}"></i>
+                                    <i style="margin-right: 4px" class="{% if single_product.calc_avg_rating == 5 %} fa-solid fa-star {% elif single_product.calc_avg_rating < 4.5 %} fa-regular fa-star  {% elif single_product.calc_avg_rating >= 4.5 and single_product.calc_avg_rating < 5%} fa-solid fa-star {% endif %}"></i>
+
+                                    {{ single_product.calc_avg_rating }}
+                                </span>
+                            </div>
                         </div>
                         <div class="card-info__indent">
                         </div>
@@ -37,7 +55,6 @@
 
 
                                 <div class="size-select_wrapper">
-                                    <i class="fa-solid fa-chevron-down"></i>
                                     <select name="size" class="form-control-sm size-select" required style="font-weight: 600">
                                         <option value="" disabled selected></option>
                                         {% for i in single_product.variation_set.sizes %}
@@ -131,14 +148,7 @@
 
             </div>
             <div class="review-send-block row g-3 align-items-center">
-{#                <form action="{% url 'add_review' product.id %}" method="post" class="col-10">#}
-{#                    {% csrf_token %}#}
-{#                    <div class="input-group main-comment-form">#}
-{#                        <span class="input-group-text" id="basic-addon1">*</span>#}
-{#                        <input type="text" class="form-control form-control-lg" placeholder="YOUR COMMENT" aria-label="" aria-describedby="basic-addon1" name="text">#}
-{#                        <button type="submit" class="btn btn-danger">send</button>#}
-{#                    </div>#}
-{#                </form>#}
+
 
 
 {#                <form method="post" action="{% url 'add_rating' %}" class="col-5" name="rating">#}
@@ -166,40 +176,121 @@
 
             </div>
             <div class="reviews-section">
+
+
+                <form action="{% url 'submit_review' single_product.id %}" method="post" class="mb-5 review-form">
+                    {% csrf_token %}
+                    <span class="review-form-header mb-2">write your review</span>
+
+                    <div class="review-star-form">
+                        <label class="r-s-header">How do you rate this product?</label>
+
+                        <br>
+
+                        <div class="rate mt-md-2">
+                            <input type="radio" name="rating" id="rating5" value="5" required  > <label for="rating5" title="5"></label>
+                            <input type="radio" name="rating" id="rating4" value="4" required > <label for="rating4" title="4"></label>
+                            <input type="radio" name="rating" id="rating3" value="3" required > <label for="rating3" title="3"></label>
+                            <input type="radio" name="rating" id="rating2" value="2" required > <label for="rating2" title="2"></label>
+                            <input type="radio" name="rating" id="rating1" value="1" required > <label for="rating1" title="1"></label>
+                        </div>
+
+                    </div>
+
+                    <div class="main-comment-form mt-4 mb-3">
+                        Write review header here:
+                        <input type="text" name="subject" class="form-control">
+                        <br>
+                        Write review text here:
+                        <textarea class="form-control review-text" name="review" rows="2"></textarea>
+
+                        {% if user.is_authenticated %}
+                            {% if order_product %}
+                                <button type="submit" class="btn btn-danger review-form-send mt-4">submit review</button>
+                            {% else %}
+                                <span class="review-alert mt-4">You must purchase this product to post a review. </span>
+                            {% endif %}
+                        {% else %}
+                            <span class="review-alert mt-4">You must be logged in to post a review. <a href="{% url 'login' %}">Log in now</a></span>
+                        {% endif %}
+                    </div>
+
+                    {% include 'include/alerts.html' %}
+
+                </form>
+
                 <div class="reviews-title">
-                    <span class="">reviews
+                    <span class="">customer's reviews
                         (
-                        {% if product.reviews_set.count > 0 %}
-                            {{ product.reviews_set.count }}
+                        {% if reviews.count > 0 %}
+                            {{ reviews.count }}
 
                         {% else %}
                             0
                         {% endif %}
                         )</span>
-                    <i class="fa-solid fa-angle-down"></i>
                 </div>
-
 
 
                 <div class="reviews">
 
-                    {% for review in product.reviews_set.all %}
-                        <div class="review">
-                            <div class="review-body">
-                                <div class="avatar-field">
-                                    <a href="#"><img src="{% static 'vendor/img/unknownuser.png' %}" alt="" style="width: 30px; height: 30px; border-radius: 50%; background-color: #FFF;"></a>
-                                </div>
-                                <div class="name-field">
-                                    <a href="#"><span>username</span></a>
-                                </div>
-                                <div class="text-field">
-                                    <p>{{ review.text }}</p>
-                                </div>
-                                <div class="rating-field">
-                                    {{ product.rating_set.filter }}
+                    {% for review in reviews %}
+                        <div class="review-wrapper">
+                            <div class="review">
+                                <div class="review-body">
+
+
+                                    <div class="row pt-3">
+                                        <div class="col-lg-1 avatar-field" style="padding-right: 5px">
+                                            <a href="#"><img src="{% static 'vendor/img/unknownuser.png' %}" alt="" style="width: 22px; height: 22px; border-radius: 50%; background-color: #FFF;"></a>
+                                        </div>
+
+                                        <div class="col-9 name-field">
+                                            <a href="#"><span>{{ review.user.get_fullname }}</span></a>
+                                        </div>
+
+                                        <div class="col-lg-2 date-field">
+                                            <span><i>{{ review.get_updated_at }}</i></span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row pt-2">
+                                        <div class="col-lg-1" style="width: 35px"></div>
+
+                                        <div class="col review-rating">
+
+                                            {% load star_rating_tags %}
+
+                                            {% star_rating review.rating|safe %}
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row pt-4 pb-2">
+                                        <div class="col-lg-1" style="width: 35px"></div>
+
+                                        <div class="col review-subject">
+                                            <span>{{ review.subject }}</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row pt-3 pb-3">
+                                        <div class="col-lg-1" style="width: 35px"></div>
+
+                                        <div class="col text-field">
+                                            <p>
+                                                {{ review.review }}
+                                            </p>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     {% endfor %}
                 </div>
 

@@ -44,13 +44,20 @@ class Order(models.Model):
 
 
     def get_fullname(self):
-        return self.first_name + self.last_name
+        return f'{self.first_name} {self.last_name}'
 
     def __str__(self):
         return self.first_name
 
     def get_subtotal(self):
         return self.order_total - self.tax
+
+    def get_billing_name(self):
+        return f'{self.country}, {self.city}, {self.address_line_1}'
+
+    def get_order_date(self):
+        return self.created_at.date().strftime('%d.%m.%Y')
+
 
 
 class OrderProduct(models.Model):

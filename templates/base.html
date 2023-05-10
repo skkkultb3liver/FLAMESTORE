@@ -9,7 +9,6 @@
     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
-    <link rel="stylesheet" href="{% static 'css/modal-login.css' %}">
     <link rel="stylesheet" href="{% static 'css/user-dropdown-menu.css' %}">
     <link rel="stylesheet" href="{% static 'css/cart-dropdown.css' %}">
     <link rel="stylesheet" href="{% static 'css/products.css' %}">
@@ -21,33 +20,31 @@
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <header>
-        <nav class="navbar fixed-top navbar-expand-lg main-nav">
-            <div class="container">
-                <div class="row menu-row">
-                    <div class="col-4 text-start menu-item">
-                        <a href="#" class="nav-item">
-                            <span>about us</span>
-                        </a>
-                    </div>
-                    <div class="col-4 text-center menu-item">
-                        <a href="{% url 'store' %}" class="navbar-brand">
-                            <span>fl<b>a</b>me</span>
-                        </a>
-                    </div>
-                    <div class="nav-item col-4 menu-item">
-                        <a href="#modal-login" class="nav-item js-modal-open">
-                            <span>sign in/ <br> register</span>
-                        </a>
+    <nav class="navbar fixed-top navbar-expand-lg main-nav">
+        <div class="container">
+            <div class="row menu-row">
+                <div class="col-4 text-start menu-item">
+                    <a href="#" class="nav-item">
+                        <span>about us</span>
+                    </a>
+                </div>
+                <div class="col-4 text-center menu-item">
+                    <a href="{% url 'store' %}" class="navbar-brand">
+                        <span>fl<b>a</b>me</span>
+                    </a>
+                </div>
+                <div class="nav-item col-4 menu-item">
+
+                    {% if user.id is not None %}
 
                         <div class="user-block">
                             <a href="" class="nav-item user-name">
-                                <span>username</span>
+                                <span>{{ user.first_name }}</span>
                             </a>
 
                             <ul class="user-drop-down-menu">
                                 <li class="user-drop-down-menu__item">
-                                    <a href="">
+                                    <a href="{% url 'profile' %}">
                                         <span>profile</span>
                                     </a>
                                 </li>
@@ -57,7 +54,7 @@
                                     </a>
                                 </li>
                                 <li class="user-drop-down-menu__item">
-                                    <a href="#" class="log-out">
+                                    <a href="{% url 'logout' %}" class="log-out">
                                         <span>log out</span>
                                     </a>
                                 </li>
@@ -112,11 +109,18 @@
                             </div>
                         </div>
 
-                    </div>
+                    {% else %}
+
+                        <a href="{% url 'login' %}" class="nav-item">
+                            <span>sign in/ <br> register</span>
+                        </a>
+
+                    {% endif %}
+
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
     {% block content %} {% endblock %}
 
@@ -177,43 +181,10 @@
         </div>
     </footer>
 
-    <div class="modal-login" id="modal-login">
-        <div class="modal-login__dialog">
-            <div class="modal-login__dialog-header">
-                <span class="modal-title">authorize</span>
-                <a href="#" class="modal-close js-modal-close">
-                    <i class="fa-solid fa-xmark"></i>
-                </a>
-            </div>
-
-            <div class="modal-login__dialog-body">
-                <div class="modal-login__dialog-body-content">
-                    <form class="modal-login__dialog-body-content__form">
-                        <div class="mb-4 login-form__email login-form-input">
-                            <label for="exampleInputEmail1" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
-                        <div class="mb-4 login-form__password login-form-input">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
-                        </div>
-                    </form>
-                    <a href="" class="login-form__description">
-                        <span>You don't have an account? Register</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="modal-login__dialog-footer">
-                <button type="button" class="btn btn-outline-danger btn-lg login-button js-login-button">login</button>
-            </div>
-        </div>
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     {% block js %} {% endblock %}
-    <script src="{% static 'js/login-screen.js' %}"></script>
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
 </body>
 </html>

@@ -10,6 +10,7 @@ from django.core.mail import EmailMessage
 
 from cart.models import Cart, CartItem
 from cart.views import _cart_id
+from orders.models import Order
 from .forms import RegisterForm
 from django.contrib import messages, auth
 
@@ -174,7 +175,15 @@ def activate(request, uidb64, token):
 
 @login_required(login_url='login')
 def profile(request):
-    return render(request, 'accounts/profile-info.html')
+
+    orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, ip_ordered=True)
+    orders_count = orders.count()
+
+    context = {
+        'orders_count': orders_count
+    }
+
+    return render(request, 'accounts/profile-info.html', context)
 
 
 def forgot_password(request):
@@ -243,3 +252,16 @@ def reset_password(request):
 
     else:
         return render(request, 'accounts/reset_password.html')
+
+
+# PROFILE SETTINGS
+
+
+def my_orders(request):
+
+    orders = Order.objects.filter(user=request.user, ip_ordered=True).order_by('-created_at')
+
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'accounts/user_profile/my_orders.html', context)

@@ -39,21 +39,16 @@
                     </a>
                 </div>
                 <div class="mainscreen__slider">
-                    <div class="mainscreen__slider__card">
-                        <img class="mainscreen__slider__card__desc__photo" src="/vendor/img/slider/c2uc9H07XcM-PhotoRoom.png" alt="">
-                        <a href="#"><p class="mainscreen__slider__card__desc">VLONE  DENIM FRNDS <br> JACKET  BLACK/RED</p></a>
-                        <p class="mainscreen__slider__card__price">710$</p>
-                    </div>
-                    <div class="mainscreen__slider__card">
-                        <img class="mainscreen__slider__card__desc__photo" src="/vendor/img/slider/hbuddzkmlls-PhotoRoom%201.png" alt="">
-                        <a href="#"><p class="mainscreen__slider__card__desc">VLONE "SCARFACE" <br> BLACK LONGSLEEVE </p></a>
-                        <p class="mainscreen__slider__card__price">520$</p>
-                    </div>
-                    <div class="mainscreen__slider__card">
-                        <img class="mainscreen__slider__card__desc__photo" src="/vendor/img/slider/ZnFG4v5DUe4-PhotoRoom%201.png" alt="">
-                        <a href="#"><p class="mainscreen__slider__card__desc">VLONE "MEXICO" <br> BLACK STAPLE TEE</p></a>
-                        <p class="mainscreen__slider__card__price">200$</p>
-                    </div>
+                    {% for product in u_products %}
+                        <div class="mainscreen__slider__card">
+                            <a href="{{ product.get_absolute_url }}" class="mainscreen__slider__card__desc__photo">
+                                <img src="{{ product.poster.url }}" alt="">
+                            </a>
+                            <a href="{{ product.get_absolute_url }}"><p class="mainscreen__slider__card__desc">{{ product.name }}</p></a>
+                            <p class="mainscreen__slider__card__price">{{ product.price }} RUB</p>
+                        </div>
+                    {% endfor %}
+
                 </div>
             </section>
         </div>

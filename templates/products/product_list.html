@@ -16,38 +16,49 @@
                         </div>
 
                         <div class="products-section__header__search_field input-group">
-                            <span class="input-group-text" id="search-addon">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </span>
-                            <input type="email" class="form-control products-section__header__search_field__form" id="searchItems" placeholder="Search" aria-describedby="search-addon">
+                            <form action="{% url 'search' %}" class="search-form" method="GET">
+                                <input type="search" class="form-control products-section__header__search_field__form" id="searchItems" placeholder="Search" aria-describedby="search-addon" name="keyword" required>
+                                <button class="input-group-text" id="search-addon">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                     <div class="products-list">
+
                        {% for product in products %}
                             {% if product.stock > 0 %}
                                 <div class="card-item">
-{#                                <a href="{% url 'add_cart' product.id %}" class="card-image__add-to-cart" style="z-index: 1;">#}
-{#                                    <span class="text-center">add to cart</span>#}
-{#                                </a>#}
-                                <div class="card-image" style="z-index: 2;">
 
-                                    <a href="{{ product.get_absolute_url }}">
-                                        <img src="{{ product.poster.url }}" alt="{{ product.name }}" style="width: 280px; height: 374px; border-radius: 10px;">
+                                    <div class="card-image" style="z-index: 2;">
+
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <img src="{{ product.poster.url }}" alt="{{ product.name }}" style="width: 280px; height: 374px; border-radius: 10px;">
+                                        </a>
+                                    </div>
+
+                                    <a class="card-title mt-2" href="{{ product.get_absolute_url }}">
+                                        <span class="">
+                                            {{ product.name }}
+                                        </span>
                                     </a>
-                                </div>
-
-                                <a href="{{ product.get_absolute_url }}">
-                                    <span class="card-title">
-                                        {{ product.name }}
+                                    <span class="card-price mt-2">
+                                         {{ product.price }} rub
                                     </span>
-                                </a>
-                                <span class="card-price">
-                                     {{ product.price }} rub
-                                </span>
-{#                                <a href="{% url 'add_cart' product.id %}" class="card-cart">#}
-{#                                    <i class="fa-solid fa-cart-plus"></i>#}
-{#                                </a>#}
-                            </div>
+
+                                    <div class="mb-3 mt-3 review-rating" style="width: 85%;">
+                                        <span>
+
+                                            <i class="{% if product.calc_avg_rating >= 1 %} fa-solid fa-star {% elif product.calc_avg_rating < 0.5 %} fa-regular fa-star  {% elif product.calc_avg_rating >= 0.5 and product.calc_avg_rating < 1%} fa-solid fa-star {% endif %}"></i>
+                                            <i class="{% if product.calc_avg_rating >= 2 %} fa-solid fa-star {% elif product.calc_avg_rating < 1.5 %} fa-regular fa-star  {% elif product.calc_avg_rating >= 1.5 and product.calc_avg_rating < 2%} fa-solid fa-star {% endif %}"></i>
+                                            <i class="{% if product.calc_avg_rating >= 3 %} fa-solid fa-star {% elif product.calc_avg_rating < 2.5 %} fa-regular fa-star  {% elif product.calc_avg_rating >= 2.5 and product.calc_avg_rating < 3%} fa-solid fa-star {% endif %}"></i>
+                                            <i class="{% if product.calc_avg_rating >= 4 %} fa-solid fa-star {% elif product.calc_avg_rating < 3.5 %} fa-regular fa-star  {% elif product.calc_avg_rating >= 3.5 and product.calc_avg_rating < 4%} fa-solid fa-star {% endif %}"></i>
+                                            <i style="margin-right: 4px" class="{% if product.calc_avg_rating == 5 %} fa-solid fa-star {% elif product.calc_avg_rating < 4.5 %} fa-regular fa-star  {% elif product.calc_avg_rating >= 4.5 and product.calc_avg_rating < 5%} fa-solid fa-star {% endif %}"></i>
+
+                                            <b>{{ product.calc_avg_rating }}</b>
+                                        </span>
+                                    </div>
+                                </div>
                             {% endif %}
                         {% endfor %}
                     </div>
@@ -59,4 +70,6 @@
         </div>
     </main>
 {% endblock %}
+
+{% include 'accounts/login.html' %}
 
