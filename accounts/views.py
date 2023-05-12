@@ -7,11 +7,11 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage
-
+from django.shortcuts import get_object_or_404
 from cart.models import Cart, CartItem
 from cart.views import _cart_id
 from orders.models import Order
-from .forms import RegisterForm
+from .forms import *
 from django.contrib import messages, auth
 
 from django.utils.http import urlencode
@@ -265,3 +265,35 @@ def my_orders(request):
         'orders': orders,
     }
     return render(request, 'accounts/user_profile/my_orders.html', context)
+
+
+def edit_profile(request):
+
+    userprofile = get_object_or_404(UserProfile, user=request.user)
+
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+
+            messages.success(request, 'Your profile has been successfully updated!')
+
+            return redirect('profile')
+
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = UserProfileForm(instance=userprofile)
+
+        print(profile_form.errors)
+        print(user_form.errors)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'userprofile': userprofile
+    }
+
+    return render(request, 'accounts/user_profile/edit_profile.html', context)
