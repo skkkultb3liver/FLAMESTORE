@@ -257,6 +257,7 @@ def reset_password(request):
 # PROFILE SETTINGS
 
 
+@login_required(login_url='login')
 def my_orders(request):
 
     orders = Order.objects.filter(user=request.user, ip_ordered=True).order_by('-created_at')
@@ -267,6 +268,7 @@ def my_orders(request):
     return render(request, 'accounts/user_profile/my_orders.html', context)
 
 
+@login_required(login_url='login')
 def edit_profile(request):
 
     userprofile = get_object_or_404(UserProfile, user=request.user)
@@ -297,3 +299,40 @@ def edit_profile(request):
     }
 
     return render(request, 'accounts/user_profile/edit_profile.html', context)
+
+
+@login_required(login_url='login')
+def change_password(request):
+
+    if request.method == 'POST':
+
+        current_password = request.POST['current_password']
+        new_password = request.POST['new_password']
+        confirm_new_password = request.POST['confirm_new_password']
+
+        user = Account.objects.get(username__exact=request.user.username)
+
+        if new_password == confirm_new_password:
+            success = user.check_password(current_password)
+
+            if success:
+                user.set_password(new_password)
+                user.save()
+                auth.logout(request)
+
+                messages.success(request, 'Your password has been successfully changed! Please log in again.')
+
+                return redirect('change_password')
+
+            else:
+                messages.error(request, 'Current password is incorrect.')
+
+                return redirect('change_password')
+
+        else:
+            messages.error(request, 'Passwords does not match')
+
+            return redirect('change_password')
+
+
+    return render(request, 'accounts/user_profile/change_password.html')
